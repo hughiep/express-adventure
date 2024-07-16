@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
+    "target": "ESNext",
+    "esModuleInterop": true,
+    "module": "CommonJS",
     "outDir": "dist",
     "strict": true,
     "allowJs": true,
@@ -11,6 +11,6 @@
     "strictPropertyInitialization": false
   },
 
-  "include": ["**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -3,26 +3,18 @@ import bodyParser from "body-parser";
 import { appendFile, readFile, unlink } from "node:fs/promises";
 import jwt from "jsonwebtoken";
 import { authMiddleware } from "./modules/auth/auth.middleware.js";
-import { AppDataSource } from "./db/data-source.js";
+import { appDataSource } from "./db/data-source.js";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 import "reflect-metadata";
 
-AppDataSource.initialize()
-  .then(() => {
-    console.log("Database connected");
-  })
-  .catch((error) => {
-    console.error("Error connecting to the database", error);
-  });
+appDataSource.initialize().then(() => {
+  console.log("Database connected");
+});
 
 const router = express.Router();
-
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
 
 // create a file
 router.post("/create", async (req, res) => {
@@ -62,16 +54,19 @@ function initApp() {
   const app = express();
   app.use(bodyParser.json());
 
+  app.get("/ping", (req, res) => {
+    res.send("pong");
+  });
   app.use("/api", router);
 
-  app.listen(3000, () => {
-    console.log("Server is running on port 3000");
+  app.listen(8000, () => {
+    console.log("Server is running on port 8000");
   });
 
   return app;
 }
 
-function main() {
+export function main() {
   initApp();
 }
 

@@ -1,27 +1,28 @@
 services:
-  backend:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "3000:3000"
-    volumes:
-      - .:/app
+      - "8000:8000"
     environment:
+      NODE_ENV: ${NODE_ENV}
       DB_HOST: db
+    env_file:
+      - .env
     depends_on:
       - db
   db:
-      image: mysql
-      environment:
-        MYSQL_ROOT_PASSWORD: "root"
-        MYSQL_DATABASE: ${MYSQL_DATABASE}
-        MYSQL_USER: ${MYSQL_USER}
-        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
 
-      env_file:
-        - .env
-      ports:
-        - 3306:3306
-      restart: always
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+    restart: always

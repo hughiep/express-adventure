@@ -11,8 +11,8 @@
       "driver": "MySQL",
       "name": "orm",
       "database": "orm-mysql",
-      "username": "root",
-      "password": "root"
+      "username": "hiepnguyen",
+      "password": "hiepnguyen"
     }
   ]
 }
