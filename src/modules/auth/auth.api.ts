@@ -11,10 +11,11 @@ const sessionAuth = session({
   store: redisStore,
 });
 
-const authRouter = express.Router();
+export const authRouter = express.Router();
 
 authRouter.post("/register", (req, res) => {
   const { email, name, password } = userRegisterSchema.parse(req.body);
+
   return res.status(200).json({ status: "success" });
 });
 
@@ -38,13 +39,13 @@ authRouter.post("/register", (req, res) => {
 //   return res.status(200).json({ user: req.session.user });
 // });
 
-authRouter.get("/destroy-session", (req, res) => {
-  req.session.destroy(function (err) {
-    if (err) {
-      return res.status(500).json({ status: "error" });
-    }
+// authRouter.get("/destroy-session", (req, res) => {
+//   req.session.destroy(function (err) {
+//     if (err) {
+//       return res.status(500).json({ status: "error" });
+//     }
 
-    res.clearCookie("connect.sid", { path: "/" });
-    return res.status(200).json({ status: "success" });
-  });
-});
+//     res.clearCookie("connect.sid", { path: "/" });
+//     return res.status(200).json({ status: "success" });
+//   });
+// });
