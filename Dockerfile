@@ -29,17 +29,11 @@ FROM base as runtime
 
 WORKDIR /usr/app
 
-# Since `alpine` doesn't have node user and group, we need to create them
-# RUN addgroup --system --gid 1001 node
-# RUN adduser --system --uid 1001 node
-
 # Copy the built files
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
-# Do I need to copy .env file?
-
-# USER node
+USER node
 
 # Expose the port
 EXPOSE 8000
