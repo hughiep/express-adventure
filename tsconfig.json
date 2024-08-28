@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "esModuleInterop": true,
-    "module": "CommonJS",
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
     "outDir": "dist",
     "strict": true,
     "allowJs": true,

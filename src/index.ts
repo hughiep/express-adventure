@@ -1,12 +1,13 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { appDataSource } from "./db/data-source";
 import dotenv from "dotenv";
 import { errorMiddleware } from "./shared/errors";
 import { authRouter } from "./modules/auth/auth.api";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 import "reflect-metadata";
+import { getAccessToken, requestGetAuthCode } from "./libs/oauth";
 
 // const router = express.Router();
 
@@ -48,17 +49,29 @@ export function main() {
   const app = express();
   app.use(bodyParser.json());
 
-  app.get("/ping", (req, res) => {
+  app.get("/ping", (_, res) => {
     res.send("pong");
+  });
+
+  // Auth
+  app.get("/auth", (req, res) => {
+    res.redirect(requestGetAuthCode);
+  });
+
+  app.get(process.env.OAUTH_REDIRECT_URI!, async (req, res) => {
+    // ! get authorization token from request parameter
+    const authorizationCode = req.query.code;
+    // const response = await getAccessToken(authorizationCode as string);
+    // console.log(response);
+    // if (response.ok) {
+    //   const data = await response.json();
+    //   res.send(data);
+    // }
   });
 
   app.use("/api", authRouter);
   // Order matters
-  app.use(errorMiddleware);
-
-  appDataSource.initialize().then(() => {
-    console.log("Database connected");
-  });
+  // app.use(errorMiddleware);
 
   app.listen(8000, () => {
     console.log("Server is running on port 8000");

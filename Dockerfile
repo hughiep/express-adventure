@@ -1,6 +1,6 @@
-FROM node:20-alpine as base
+FROM node:20-alpine AS base
 
-FROM base as builder
+FROM base AS builder
 
 # Install dependencies
 RUN apk add --no-cache libc6-compat
@@ -21,11 +21,10 @@ RUN pnpm install --frozen-lockfile
 # Build the app
 COPY . .
 
-RUN cat .env
-RUN pnpm run build
+RUN cat .env && pnpm run build
 
 # Runtime 
-FROM base as runtime
+FROM base AS runtime
 
 WORKDIR /usr/app
 

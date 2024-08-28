@@ -2,14 +2,16 @@ import RedisStore from "connect-redis";
 import redis from "redis";
 
 const redisClient = redis.createClient({
-  password: "uQEXisjT18hHgfpvmcpJaGfQ3DHzCrMb",
+  password: process.env.REDIS_PASSWORD,
   socket: {
-    host: "redis-16636.c292.ap-southeast-1-1.ec2.redns.redis-cloud.com",
-    port: 16636,
+    host: "localhost",
+    port: 6379,
   },
 });
 
-redisClient.connect().catch(console.error);
+redisClient
+  .connect()
+  .catch((err) => console.error("Error connect redis client", err));
 
 export const redisStore = new RedisStore({
   client: redisClient,

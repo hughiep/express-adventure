@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1724854952964,
+      "tag": "0000_curved_johnny_storm",
+      "breakpoints": true
+    }
+  ]
+}
