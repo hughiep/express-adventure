@@ -1,4 +1,5 @@
 import queryString from "query-string";
+import axios from "axios";
 
 const GOOGLE_OAUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth";
 
@@ -33,11 +34,17 @@ const getAccessToken = async (authCode: string) => {
 
   return fetch(`${google_access_token_endpoint}`, {
     method: "POST",
-    body: JSON.stringify(access_token_params),
+    body: queryString.stringify(access_token_params),
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   });
+
+  // return axios.post(`${google_access_token_endpoint}`, access_token_params, {
+  //   headers: {
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //   },
+  // });
 };
 
 export { requestGetAuthCode, getAccessToken };

@@ -55,18 +55,20 @@ export function main() {
 
   // Auth
   app.get("/auth", (req, res) => {
+    console.log("auth");
     res.redirect(requestGetAuthCode);
   });
 
   app.get(process.env.OAUTH_REDIRECT_URI!, async (req, res) => {
     // ! get authorization token from request parameter
     const authorizationCode = req.query.code;
-    // const response = await getAccessToken(authorizationCode as string);
-    // console.log(response);
-    // if (response.ok) {
-    //   const data = await response.json();
-    //   res.send(data);
-    // }
+    console.log(authorizationCode);
+    const response = await getAccessToken(authorizationCode as string);
+    console.log(response);
+    if (response.ok) {
+      const data = await response.json();
+      res.send(data.access_token);
+    }
   });
 
   app.use("/api", authRouter);
