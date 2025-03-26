@@ -1,49 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import { errorMiddleware } from "./shared/errors";
 import { authRouter } from "./modules/auth/auth.api";
-import jwt from "jsonwebtoken";
 
 dotenv.config();
-import "reflect-metadata";
 import { getAccessToken, requestGetAuthCode } from "./libs/oauth";
-
-// const router = express.Router();
-
-// create a file
-// router.post("/create", async (req, res) => {
-//   console.log(req.body);
-//   await appendFile(req.body.name, req.body.content);
-//   res.send("Create a file");
-// });
-
-// router.delete("/delete/:name", async (req, res) => {
-//   try {
-//     // delete a file using fs module
-//     unlink(req.params.name);
-
-//     console.log(req.params.name);
-//     res.send("Delete a file");
-//   } catch (error) {
-//     res.send("File not found");
-//   }
-// });
-
-// router.post("/login", (req, res) => {
-//   console.log(req.body);
-//   const token = jwt.sign(req.body, "secret", {
-//     expiresIn: "2 days",
-//   });
-//   res.send(token);
-// });
-
-// router.use(authMiddleware);
-
-// router.get("/read/:name", async (req, res) => {
-//   const content = await readFile(req.params.name);
-//   res.send(content);
-// });
 
 export function main() {
   const app = express();
@@ -60,7 +21,6 @@ export function main() {
   });
 
   app.get(process.env.OAUTH_REDIRECT_URI!, async (req, res) => {
-    // ! get authorization token from request parameter
     const authorizationCode = req.query.code;
     console.log(authorizationCode);
     const response = await getAccessToken(authorizationCode as string);
